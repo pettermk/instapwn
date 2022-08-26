@@ -11,12 +11,15 @@ from web.models import Post
 def index(request):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         # check whether it's valid:
         if form.is_valid():
             post = Post(
                 author = request.user,
-                title=form.cleaned_data['title'], content=form.cleaned_data['content'])
+                title=form.cleaned_data['title'],
+                content=form.cleaned_data['content'],
+                image=form.cleaned_data['image']
+            )
             post.save()
     posts = Post.objects.all()
     return render(

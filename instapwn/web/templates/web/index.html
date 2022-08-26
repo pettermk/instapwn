@@ -43,6 +43,9 @@
           {% endif %}
           <h5 class="card-title">{{post.title | safe}}</h5>
           <p>{{post.content}}</p>
+          {% if post.image %}
+          <img src="images/{{post.image}}" width="400px"></img>
+          {% endif %}
           <div class="text-end">
             {{post.author.username}}
           </div>
