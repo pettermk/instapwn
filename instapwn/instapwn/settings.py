@@ -70,6 +70,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'instapwn.wsgi.application'
 
+SESSION_COOKIE_HTTPONLY = False
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
