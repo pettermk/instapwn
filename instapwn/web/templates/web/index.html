@@ -12,8 +12,8 @@
   </div>
   <div class="px-4 py-5 my-5 text-center">
     <h1 class="display-5 fw-bold">New post</h1>
-    <div class="col-lg-6 mx-auto">
-      <form class="p-4 p-md-5 border rounded-3 bg-light" method="post">
+    <div class="col-lg-6 mx-auto text-lg-start">
+      <form class="p-4 p-md-5 border rounded-3 bg-light" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{PostForm.as_p}}
         <button class="w-100 btn btn-lg btn-primary" type="submit">Post</button>
