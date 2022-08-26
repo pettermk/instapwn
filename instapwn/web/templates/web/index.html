@@ -3,7 +3,8 @@
   <div class="px-4 pt-5 my-5 text-end border-bottom">
     <p class="lead mb-4">
       {% if user.is_authenticated %}
-      {{ user.username }}
+      {{ user.username }} - 
+      <a href='accounts/logout'>Logout</a>
       {% else %}
       <a href='accounts/login'>Login</a>
       <a href='accounts/signup'>Sign up</a>
@@ -18,13 +19,12 @@
         {{PostForm.as_p}}
         <button class="w-100 btn btn-lg btn-primary" type="submit">Post</button>
       </form>
-      <p class="lead mb-4">Your personalized feed</p>
     </div>
   </div>
 
   <div class="px-4 py-5 my-5 text-center">
     <div class="col-lg-6 mx-auto">
-    <h1 class="display-5 fw-bold">InstaPWN - feed</h1>
+    <h1 class="display-5 fw-bold">InstaPWN</h1>
     <div class="col-lg-6 mx-auto">
       <p class="lead mb-4">Your personalized feed</p>
     </div>
