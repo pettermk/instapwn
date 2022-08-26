@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 
 from django.contrib.auth import login
 
-from web.forms import PostForm
+from web.forms import PostForm, DeletePostForm
 from web.models import Post
 
 def index(request):
@@ -23,6 +24,18 @@ def index(request):
         'web/index.html',
         {
             'PostForm': PostForm(),
+            'DeletePostForm': DeletePostForm(),
             'posts': posts
         }
     )
+
+def delete_post(request, pk):
+    post_to_delete = get_object_or_404(Post, pk=pk)
+
+    if request.method == 'POST':
+        form = DeletePostForm(request.POST)
+        if form.is_valid():
+            post_to_delete.delete()
+            return HttpResponseRedirect("/")
+    
+    return HttpResponseRedirect("/")

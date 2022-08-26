@@ -28,9 +28,12 @@
         <div class="card-body">
           {% if post.author.username == user.username or user.is_staff %}
           <div class="text-end">
-          <a href="posts/delete/{{post.pk}}">
+          <form action="/posts/delete/{{post.pk}}" method="POST">
+          {% csrf_token %}
+          <button type="submit" id="completed-task" class="fabutton">
           <i class="bi bi-trash"></i>
-          </a>
+          </button>
+          </form>
           </div>
           {% endif %}
           <h5 class="card-title">{{post.title | safe}}</h5>
