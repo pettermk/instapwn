@@ -1,3 +1,4 @@
 django
 django-rest-framework
 pillow
+django-csp

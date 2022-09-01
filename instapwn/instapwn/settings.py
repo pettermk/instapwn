@@ -27,6 +27,19 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# CSP headers
+# Block everything
+# CSP_DEFAULT_SRC = ["'self'"]
+
+# Allow bootstrap
+# CSP_DEFAULT_SRC = ["'self'", 'cdn.jsdelivr.net']
+
+# Allow executing the inline JS
+# CSP_SCRIPT_SRC = ["'unsafe-inline'"]
+
+# Allow "calling" the evil site
+# CSP_CONNECT_SRC = ['https://evil.cookie-monster.apps.cpj30fve.northeurope.aroapp.io/']
+
 
 # Application definition
 
@@ -48,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+#     'csp.middleware.CSPMiddleware',
 ]
 
 ROOT_URLCONF = 'instapwn.urls'
