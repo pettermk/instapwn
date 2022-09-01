@@ -11,6 +11,7 @@
       {% endif %}
     </p>
   </div>
+  {% if user.is_authenticated %}
   <div class="px-4 py-5 my-5 text-center">
     <h1 class="display-5 fw-bold">New post</h1>
     <div class="col-lg-6 mx-auto text-lg-start">
@@ -21,12 +22,13 @@
       </form>
     </div>
   </div>
+  {% endif %}
 
   <div class="px-4 py-5 my-5 text-center">
     <div class="col-lg-6 mx-auto">
-    <h1 class="display-5 fw-bold">InstaPWN</h1>
+    <h1 class="display-5 fw-bold">InstaPWNd</h1>
     <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4">Your personalized feed</p>
+      <p class="lead mb-4">Feed</p>
     </div>
     {% for post in posts %}
       <div class="card text-lg-start">
@@ -47,13 +49,11 @@
           <img src="images/{{post.image}}" width="400px"></img>
           {% endif %}
           <div class="text-end">
-            {{post.author.username}}
+            by: {{post.author.username}}
           </div>
         </div>
       </div>
     {% endfor %}
   </div>
   </div>
-
   {% endblock %}
-
