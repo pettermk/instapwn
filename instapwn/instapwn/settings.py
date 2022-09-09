@@ -35,7 +35,7 @@ CSP_DEFAULT_SRC = ["'self'"]
 # CSP_DEFAULT_SRC = ["'self'", 'cdn.jsdelivr.net']
 
 # Allow executing the inline JS
-# CSP_SCRIPT_SRC = ["'unsafe-inline'"]
+# CSP_SCRIPT_SRC = ["'unsafe-inline'", 'cdn.jsdelivr.net']
 
 # Allow "calling" the evil site
 # CSP_CONNECT_SRC = ['https://evil.cookie-monster.apps.cpj30fve.northeurope.aroapp.io/']
