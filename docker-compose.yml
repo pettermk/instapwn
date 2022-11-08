@@ -2,7 +2,19 @@ version: '3.8'
 
 services:
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
     command: gunicorn instapwn.wsgi:application --bind 0.0.0.0:8000
     ports:
       - 8000:8000
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: nginx
+    ports:
+      - 8080:80
+    environment:
+      - NGINX_UPSTREAM_URL=web

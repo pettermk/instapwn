@@ -3,3 +3,4 @@
 **/__pycache__/
 **/.dccache
 instapwn/images/
+**/static/
