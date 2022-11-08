@@ -1,0 +1,79 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "containerappName": {
+      "defaultValue": "instapwn",
+      "type": "String"
+    },
+    "location": {
+      "defaultValue": "northeurope",
+      "type": "String"
+    },
+    "environment_name": {
+      "defaultValue": "test",
+      "type": "String"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "apiVersion": "2022-03-01",
+      "type": "Microsoft.App/containerApps",
+      "name": "[parameters('containerappName')]",
+      "location": "[parameters('location')]",
+      "identity": {
+        "type": "None"
+      },
+      "properties": {
+        "managedEnvironmentId": "/subscriptions/0141f70a-fe2b-4cee-920e-13f183ca3097/resourceGroups/instapwn-test/providers/Microsoft.App/managedEnvironments/instapwn-test",
+        "configuration": {
+          "ingress": {
+            "external": true,
+            "targetPort": 80,
+            "allowInsecure": false,
+            "traffic": [
+              {
+                "latestRevision": true,
+                "weight": 100
+              }
+            ]
+          }
+        },
+        "template": {
+          "containers": [
+              {
+                  "image": "ghcr.io/pettermk/instapwn-web:sha-5df4867",
+                  "name": "instapwn-web",
+                  "resources": {
+                      "cpu": 0.5,
+                      "memory": "1Gi",
+                      "ephemeralStorage": ""
+                  },
+                  "command": ["gunicorn", "instapwn.wsgi:application", "--bind", "0.0.0.0:8000"]
+              },
+              {
+                  "image": "ghcr.io/pettermk/instapwn-nginx:sha-5df4867",
+                  "name": "instapwn-nginx",
+                  "resources": {
+                      "cpu": 0.5,
+                      "memory": "1Gi",
+                      "ephemeralStorage": ""
+                  },
+                  "env": [
+                    {
+                      "name": "NGINX_UPSTREAM_URL",
+                      "value": "localhost"
+                    }
+                ]
+              }
+          ],
+          "scale": {
+            "minReplicas": 1,
+            "maxReplicas": 3
+          }
+        }
+      }
+    }
+  ]
+}
