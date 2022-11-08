@@ -25,23 +25,23 @@ SECRET_KEY = 'django-insecure-*w^w+jkag5rvo6818^7^3ra*ez2zz=50o0ye5*2t-2e+)9oy!a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*.northeurope.azurecontainerapps.io']
 
 # CSP headers
 # Block everything
 CSP_DEFAULT_SRC = ["'self'"]
 
 # Allow bootstrap
-# CSP_DEFAULT_SRC = ["'self'", 'cdn.jsdelivr.net']
+#CSP_DEFAULT_SRC = ["'self'", 'cdn.jsdelivr.net']
 
 # Allow executing the inline JS
-# CSP_SCRIPT_SRC = ["'unsafe-inline'", 'cdn.jsdelivr.net']
+#CSP_SCRIPT_SRC = ["'unsafe-inline'", 'cdn.jsdelivr.net']
 
 # Allow "calling" the evil site
-# CSP_CONNECT_SRC = ['https://evil.cookie-monster.apps.cpj30fve.northeurope.aroapp.io/']
+#CSP_CONNECT_SRC = ['https://evil.cookie-monster.apps.cpj30fve.northeurope.aroapp.io/']
 
 # Report CSP violations to this site
-# CSP_REPORT_URI = ['https://csp-report.app.radix.equinor.com/report?api_key=a7e12f4c-9268-4757-9ef9-014834a6471a']
+CSP_REPORT_URI = ['https://csp-report.app.radix.equinor.com/report?api_key=a7e12f4c-9268-4757-9ef9-014834a6471a']
 
 # Don't block on CSP violations, just report
 # CSP_REPORT_ONLY = True
@@ -66,7 +66,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-#     'csp.middleware.CSPMiddleware',
+#    'csp.middleware.CSPMiddleware',
 ]
 
 ROOT_URLCONF = 'instapwn.urls'
