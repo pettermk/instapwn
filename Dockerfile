@@ -1,10 +1,14 @@
 FROM python:3.10-alpine as dev
 
+RUN adduser -D instapwn
+USER instapwn
 WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+COPY --chown=instapwn:instapwn requirements.txt .
+RUN pip install --user -r requirements.txt
 
-COPY instapwn/ instapwn/
+ENV PATH="/home/instapwn/.local/bin:${PATH}"
+
+COPY --chown=instapwn:instapwn instapwn/ instapwn/
 WORKDIR /app/instapwn
 
 EXPOSE 8000
