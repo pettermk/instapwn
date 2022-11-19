@@ -11,6 +11,7 @@ python -m venv env
 source env/bin/activate
 pip install -r requirements.txt
 ```
+Change
 
 Create a local sqlite database, apply migrations and run server
 ```
