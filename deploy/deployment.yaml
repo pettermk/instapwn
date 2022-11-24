@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: instapwn-deployment
+  labels:
+    app: instapwn
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: instapwn
+  template:
+    metadata:
+      labels:
+        app: instapwn
+      name: instapwn
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - args:
+        - nginx
+        - -g
+        - daemon off;
+        env:
+        - name: NGINX_UPSTREAM_URL
+          value: 127.0.0.1
+        image: docker.io/library/instapwn-nginx:latest
+        imagePullPolicy: Never
+        name: nginx-1
+        ports:
+        - containerPort: 80
+        resources: {}
+      - command:
+        - gunicorn
+        - instapwn.wsgi:application
+        - --bind
+        - 0.0.0.0:8000
+        env:
+        - name: DEBUG
+          value: "True"
+        image: docker.io/library/instapwn-web:latest
+        imagePullPolicy: Never
+        name: web
+        resources: {}
+      enableServiceLinks: false
+      restartPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: instapwn-service
+spec:
+  selector:
+    app: instapwn
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+spec:
+  rules:
+    - host: instapwn.loc
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: instapwn-service
+                port:
+                  number: 80
