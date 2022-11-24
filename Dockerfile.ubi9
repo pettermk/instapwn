@@ -1,0 +1,27 @@
+# FROM registry.access.redhat.com/ubi9/ubi-init:latest as dev
+FROM gcr.io/distroless/python3-debian11 as dev
+# RUN dnf -y install python3 python3-pip
+
+# USER 1001
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip3 install -r requirements.txt
+
+# ENV PATH="/home/instapwn/.local/bin:${PATH}"
+
+COPY instapwn/ instapwn/
+WORKDIR /app/instapwn
+
+EXPOSE 8000
+
+FROM dev as collectstatic
+USER root
+RUN python3 manage.py collectstatic --noinput
+
+FROM nginx:alpine as nginx
+RUN rm /etc/nginx/conf.d/default.conf
+COPY deploy/nginx.conf /etc/nginx/templates/nginx.conf.template
+COPY --from=collectstatic /app/instapwn/static/ /app/static/
+
+EXPOSE 80
