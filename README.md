@@ -41,6 +41,12 @@ Add this line to `/etc/hosts`
 127.0.0.1 instapwn.loc
 ```
 
+Build the docker images
+```
+docker build -t instapwn-web ../ --target=python-runner
+docker build -t instapwn-nginx ../ --target=nginx
+```
+
 Deploy the manifest
 ```
 kubectl create namespace instapwn
