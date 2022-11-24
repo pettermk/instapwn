@@ -4,3 +4,4 @@
 **/.dccache
 instapwn/images/
 **/static/
+.idea/
