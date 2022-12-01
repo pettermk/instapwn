@@ -3,3 +3,4 @@ django-rest-framework
 pillow
 django-csp
 gunicorn
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
