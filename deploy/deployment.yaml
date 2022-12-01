@@ -17,20 +17,23 @@ spec:
     spec:
       automountServiceAccountToken: false
       containers:
-      - args:
+      - name: nginx-1
+        image: docker.io/library/instapwn-nginx:latest
+        imagePullPolicy: Never
+        args:
         - nginx
         - -g
         - daemon off;
         env:
         - name: NGINX_UPSTREAM_URL
           value: 127.0.0.1
-        image: docker.io/library/instapwn-nginx:latest
-        imagePullPolicy: Never
-        name: nginx-1
         ports:
         - containerPort: 80
         resources: {}
-      - command:
+      - name: web
+        image: docker.io/library/instapwn-web:latest
+        imagePullPolicy: Never
+        command:
         - gunicorn
         - instapwn.wsgi:application
         - --bind
@@ -38,9 +41,6 @@ spec:
         env:
         - name: DEBUG
           value: "True"
-        image: docker.io/library/instapwn-web:latest
-        imagePullPolicy: Never
-        name: web
         resources: {}
       enableServiceLinks: false
       restartPolicy: Always
