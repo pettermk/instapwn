@@ -4,10 +4,12 @@ from django.shortcuts import render, get_object_or_404
 # Create your views here.
 
 from django.contrib.auth import login
+from django.views.decorators.cache import cache_page
 
 from web.forms import PostForm, DeletePostForm
 from web.models import Post
 
+@cache_page(10)
 def index(request):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:

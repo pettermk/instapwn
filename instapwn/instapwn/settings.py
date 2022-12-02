@@ -21,7 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# deepcode ignore HardcodedNonCryptoSecret: <please specify a reason of ignoring this>
 SECRET_KEY = 'django-insecure-*w^w+jkag5rvo6818^7^3ra*ez2zz=50o0ye5*2t-2e+)9oy!a'
+
+ENVIRONMENT = os.getenv('ENVIRONMENT', 'local')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (os.getenv('DEBUG', 'False') == 'True')
@@ -124,6 +127,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+if ENVIRONMENT == 'docker':
+    CACHES = {
+        'default': {
+            'BACKEND': 'instapwn.cache.dapr_cache.DaprCache',
+        }
+    }
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/

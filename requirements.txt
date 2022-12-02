@@ -1,5 +1,8 @@
+wheel
 django
 django-rest-framework
 pillow
 django-csp
 gunicorn
+dapr
+dapr-ext-grpc

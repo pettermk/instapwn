@@ -24,6 +24,9 @@ WORKDIR /app/instapwn
 RUN python manage.py collectstatic --noinput
 
 FROM base as python-runner
+USER root
+RUN apk add --update --no-cache libstdc++
+USER instapwn
 # Copy the virtualenv and activate it
 COPY --from=python-builder /app/venv/ /app/venv/
 RUN . /app/venv/bin/activate
