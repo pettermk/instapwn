@@ -30,7 +30,6 @@ RUN python manage.py collectstatic --noinput
 FROM base as python-runner
 # Copy the virtualenv and activate it
 COPY --from=python-builder /app/venv/ /app/venv/
-# RUN . /app/venv/bin/activate
 
 # Copy the application code
 COPY --chown=instapwn:instapwn instapwn/ instapwn/
@@ -45,7 +44,6 @@ RUN apk add --update --no-cache libstdc++
 USER instapwn
 # Copy the virtualenv and activate it
 COPY --from=python-builder-dapr /app/venv/ /app/venv/
-# RUN . /app/venv/bin/activate
 
 # Copy the application code
 COPY --chown=instapwn:instapwn instapwn/ instapwn/
