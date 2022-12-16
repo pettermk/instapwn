@@ -9,28 +9,8 @@ services:
     command: gunicorn instapwn.wsgi:application --bind 0.0.0.0:8000
     ports:
       - 8080:80
-      - 50002:50002
     environment:
       - DEBUG=True
-      - ENVIRONMENT=docker
-    depends_on:
-      - redis
-      - placement
-    networks:
-      - instapwn
-  instapwn-dapr:
-    image: "daprio/daprd:edge"
-    command: ["./daprd",
-     "-app-id", "instapwn",
-     "-app-port", "8000",
-     "-placement-host-address", "placement:50006",
-     "-dapr-grpc-port", "50002",
-     "-components-path", "/components"]
-    volumes:
-        - "./components/:/components"
-    depends_on:
-      - web
-    network_mode: "service:web"
   nginx:
     build:
       context: .
@@ -38,24 +18,4 @@ services:
       target: nginx
     environment:
       - NGINX_UPSTREAM_URL=localhost
-    depends_on:
-      - web
-    network_mode: "service:web"
-  placement:
-    image: "daprio/dapr"
-    command: ["./placement", "-port", "50006"]
-    ports:
-      - "50006:50006"
-    networks:
-      - instapwn
-  ############################
-  # Redis state store
-  ############################
-  redis:
-    image: "redis:alpine"
-    ports:
-      - "6380:6379"
-    networks:
-      - instapwn
-networks:
-  instapwn:
+    network_mode: 'service:web'
